@@ -1,0 +1,12 @@
+[component]
+name = "Fan"
+version = "0.0.1"
+
+[[property]]
+id = "rpm"
+name = "RPM"
+input_type = "slider"
+
+default_value = 10.0
+min_value = 0.1
+max_value = 3600.0
