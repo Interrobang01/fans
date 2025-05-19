@@ -1,5 +1,5 @@
 
 [package]
 name = "Fans"
-version = "0.0.1"
+version = "0.1.0"
 description = "Adds fans to blow stuff around."

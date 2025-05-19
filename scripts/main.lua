@@ -1,49 +1,168 @@
 Scene:reset()
 
-Scene:set_gravity(vec2(0, 0))
+--Scene:set_gravity(vec2(0, 0))
 
 local iblib = require("./packages/@interrobang/iblib/lib/lib_loader.lua")
 
-local block = Scene:add_box{
-    position = vec2(-10, 0),
-    size = vec2(1, 10),
-    body_type = BodyType.Static,
-    color = Color:rgb(0.1, 0.1, 0.1), -- grey
-}
 
-local fan = Scene:add_box{
-    position = vec2(0, 0),
-    size = vec2(0.1, 1), -- meters
-    body_type = BodyType.Dynamic,
-    color = Color:rgb(1, 0.1, 0.1), -- red
-}
 
+
+
+
+
+
+
+
+
+
+
+
+local function set_property_value(component, key, value)
+    local prop = component:get_property(key);
+    prop.value = value;
+    component:set_property(key, prop);
+end;
+
+
+local conductor = require ('core/components/conductor');
 local fan_component = Scene:add_component_def{
-    name = "fan",
+    name = "Fan",
     id = "@interrobang/fans/fan",
     version = "0.2.0",
 
     code = require("./packages/@interrobang/fans/components/fan/src/main.lua", "string"),
+    properties = {
+        {
+            id = "multiplier",
+            name = "Multiplier",
+            input_type = "slider",
+            default_value = 1,
+            min_value = 0.1,
+            max_value = 10,
+        },
+        {
+            id = "size_multiplier",
+            name = "Size Multiplier",
+            input_type = "slider",
+            default_value = 1,
+            min_value = 0.1,
+            max_value = 10,
+        },
+        {
+            id = "disable_particles",
+            name = "Disable Particles",
+            input_type = "toggle",
+            default_value = false,
+
+        }
+    }
 }
 
--- local component = Scene:add_component_def({
---     name = "Player",
---     id = "@amytimed/test/player",
---     version = "0.2.0",
+local function make_into_fan(thingy, multiplier, size_multiplier)
+        
+    -- Add conductor components to base
+    local conductivity = thingy:add_component({ hash = conductor });
+    set_property_value(conductivity, "resistance", 0);
+    set_property_value(conductivity , "exposed", true);
 
---     -- Lua/Luau code to make box "jump" when we press W key
---     script = {
---         lang = "lua",
---         code = [[
---             local host = Scene:get_player(0);
 
---             function on_update()
---                 if host:key_just_pressed("W") then
---                     self:apply_linear_impulse_to_center(vec2(0, 1));
---                 end;
---             end;
---         ]],
---     },
--- });
 
-fan:add_component({hash = fan_component})
+
+
+
+    -- local component = Scene:add_component_def({
+    --     name = "Player",
+    --     id = "@amytimed/test/player",
+    --     version = "0.2.0",
+
+    --     -- Lua/Luau code to make box "jump" when we press W key
+    --     script = {
+    --         lang = "lua",
+    --         code = [[
+    --             local host = Scene:get_player(0);
+
+    --             function on_update()
+    --                 if host:key_just_pressed("W") then
+    --                     self:apply_linear_impulse_to_center(vec2(0, 1));
+    --                 end;
+    --             end;
+    --         ]],
+    --     },
+    -- });
+
+    local fan = thingy:add_component({hash = fan_component})
+    if multiplier then
+        set_property_value(fan, "multiplier", multiplier);
+    end
+    if size_multiplier then
+        set_property_value(fan, "size_multiplier", size_multiplier);
+    end
+    -- big_fan:add_component({hash = fan_component})
+    --thingy:add_component({hash=require("core/components/free_energy")})
+end
+
+local small_fan = Scene:add_box{
+    position = vec2(0, 0),
+    size = vec2(0.1, 1), -- meters
+    body_type = BodyType.Dynamic,
+    color = Color:hex(0xafacac),
+}
+small_fan:set_density(10)
+make_into_fan(small_fan)
+local big_fan = Scene:add_box{
+    position = vec2(1, 0),
+    size = vec2(1, 4), -- meters
+    body_type = BodyType.Dynamic,
+    color = Color:hex(0xafacac),
+}
+
+big_fan:set_density(10)
+make_into_fan(big_fan, 2)
+local mini_fan = Scene:add_box{
+    position = vec2(2, 0),
+    size = vec2(0.1, 0.1), -- meters
+    body_type = BodyType.Dynamic,
+    color = Color:hex(0xafacac),
+}
+
+mini_fan:set_density(10)
+make_into_fan(mini_fan, 1, 10)
+local uber_fan = Scene:add_box{
+    position = vec2(3, 0),
+    size = vec2(0.2, 1), -- meters
+    body_type = BodyType.Dynamic,
+    color = Color:hex(0x4b64b0),
+}
+uber_fan:set_density(1)
+uber_fan:set_restitution(0.5)
+local comp = uber_fan:add_component({hash=require("core/components/free_energy")})
+set_property_value(comp, "power", 20)
+make_into_fan(uber_fan, 10, 1)
+local gargantuan_fan = Scene:add_box{
+    position = vec2(10, 10),
+    size = vec2(2.5, 20), -- meters
+    body_type = BodyType.Dynamic,
+    color = Color:hex(0x373636),
+}
+gargantuan_fan:set_density(20)
+make_into_fan(gargantuan_fan, 4, 1)
+
+
+
+small_fan:set_name("Fan")
+big_fan:set_name("Big Fan")
+mini_fan:set_name("Minifan")
+uber_fan:set_name("Überfan")
+gargantuan_fan:set_name("Gargantu-fan")
+
+
+
+
+
+local block = Scene:add_box{
+    position = vec2(-10, 0),
+    size = vec2(1, 20),
+    body_type = BodyType.Static,
+    color = Color:rgb(0.1, 0.1, 0.1), -- grey
+}
+
