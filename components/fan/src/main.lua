@@ -6,7 +6,10 @@ local debug = false
 
 local rays_per_meter = 10
 
-local line = require("@interrobang/iblib/lib/line.lua")
+local line = nil
+if debug then
+    line = require("@interrobang/iblib/lib/line.lua")
+end -- dont require if debug is off cause we don't want iblib to be a dependency
 local destroy_list = {}
 
 local particles = {}
