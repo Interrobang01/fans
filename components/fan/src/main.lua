@@ -203,10 +203,12 @@ function on_start(saved_data)
                     {
                         texture = require("@interrobang/fans/assets/textures/fan_blades.png"), -- this gets scaled
                         scale = vec2(0, 0),
+                        color = Color:rgb(0, 0, 0),
                     },
                     {
                         texture = require("@interrobang/fans/assets/textures/fan_center.png"), -- this stays still
                         scale = vec2(0, 0),
+                        color = Color:rgb(0, 0, 0),
                     }
                 },
                 component = {
