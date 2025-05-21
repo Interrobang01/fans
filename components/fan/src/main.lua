@@ -100,19 +100,19 @@ local function get_bounding_box_dimensions(range, fan_attachment)
     local mult = self_component:get_property("size_multiplier").value
     local pos = self:get_position()
     local fan_pos = fan_attachment:get_position()
-    if shape.size.x > shape.size.y then
-        local corner = fan_attachment:get_world_point(vec2(-x/2*mult, 0))
-        local perpendicular_wind_direction = fan_attachment:get_world_point(vec2(x/2*mult, 0)) - corner
-        local wind_direction = fan_attachment:get_world_point(vec2(0, range + y/2)) - fan_attachment:get_world_point(vec2(0, y/2))
-        local surface_length = x*mult
-        return corner, perpendicular_wind_direction, wind_direction, surface_length
-    else
-        local corner = fan_attachment:get_world_point(vec2(0, -y/2*mult))
-        local perpendicular_wind_direction = fan_attachment:get_world_point(vec2(0, y/2*mult)) - corner
-        local wind_direction = fan_attachment:get_world_point(vec2(range + x/2, 0)) - fan_attachment:get_world_point(vec2(x/2, 0))
-        local surface_length = y*mult
-        return corner, perpendicular_wind_direction, wind_direction, surface_length
-    end
+    -- if shape.size.x > shape.size.y then
+    --     local corner = fan_attachment:get_world_point(vec2(-x/2*mult, 0))
+    --     local perpendicular_wind_direction = fan_attachment:get_world_point(vec2(x/2*mult, 0)) - corner
+    --     local wind_direction = fan_attachment:get_world_point(vec2(0, range + y/2)) - fan_attachment:get_world_point(vec2(0, y/2))
+    --     local surface_length = x*mult
+    --     return corner, perpendicular_wind_direction, wind_direction, surface_length
+    -- else
+    local corner = fan_attachment:get_world_point(vec2(0, -y/2*mult))
+    local perpendicular_wind_direction = fan_attachment:get_world_point(vec2(0, y/2*mult)) - corner
+    local wind_direction = fan_attachment:get_world_point(vec2(range + x/2, 0)) - fan_attachment:get_world_point(vec2(x/2, 0))
+    local surface_length = y*mult
+    return corner, perpendicular_wind_direction, wind_direction, surface_length
+    -- end
 end
 
 local function get_ray_hits(ray_start, ray_gap, total_rays, wind_direction)
