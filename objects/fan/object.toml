@@ -1,6 +1,6 @@
 [object]
 name = "Fan"
-version = "0.1.1"
+version = "0.1.2"
 icon = "./icon.png"
 categories = ["Electricity"]
 description = "Fans blow air when powered, pushing objects away while also providing recoil."
