@@ -93,8 +93,6 @@ local function get_bounding_box_dimensions(range, fan_attachment)
     local x = shape.size.x
     local y = shape.size.y
     local mult = self_component:get_property("size_multiplier").value
-    local pos = self:get_position()
-    local fan_pos = fan_attachment:get_position()
     -- if shape.size.x > shape.size.y then
     --     local corner = fan_attachment:get_world_point(vec2(-x/2*mult, 0))
     --     local perpendicular_wind_direction = fan_attachment:get_world_point(vec2(x/2*mult, 0)) - corner
@@ -182,7 +180,7 @@ function on_save()
 end
 
 function on_start(saved_data)
-    if fan_attachment == nil then
+    if fan_attachment == nil or fan_attachment:is_destroyed() then
         if saved_data then
             fan_attachment = saved_data
         else
