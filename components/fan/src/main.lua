@@ -24,11 +24,6 @@ local function get_force(rpm)
     return rpm/60
 end
 
-local function calculate_distance_force_scalar(distance, range)
-    return (1/2)^(10*distance/range)
-end
-
-
 local particle_component = Scene:add_component_def{
     name = "Particle",
     id = "@interrobang/fans/particle",
