@@ -232,7 +232,7 @@ local rpm = 0
 function on_event(id, data)
     if id == "activate" then
         on = true
-        rpm = data.power * 10 * self_component:get_property("multiplier").value
+        rpm = math.abs(data.power * 10 * self_component:get_property("multiplier").value)
     end
 end
 
