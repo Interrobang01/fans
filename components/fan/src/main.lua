@@ -209,6 +209,21 @@ function on_start(saved_data)
                         scale = vec2(0, 0),
                     }
                 },
+                component = {
+                    name = "Fan Attachment",
+                    version = "0.1.0",
+                    id = "@interrobang/fans/fan_attachment",
+                    icon = require("@interrobang/fans/assets/textures/icon.png"),
+                    code = require("@interrobang/fans/components/fan_attachment/src/main.lua", "string"),
+                    properties = {
+                        {
+                            id = "color",
+                            name = "Color",
+                            input_type = "color",
+                            default_value = Color:rgb(0, 0, 0),
+                        },
+                    }
+                },
             }
             fan_attachment:set_name("Fan Blades")
         end

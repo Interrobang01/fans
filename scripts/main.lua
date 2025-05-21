@@ -31,6 +31,7 @@ local fan_component = Scene:add_component_def{
     version = "0.2.0",
 
     code = require("./packages/@interrobang/fans/components/fan/src/main.lua", "string"),
+    icon = require("@interrobang/fans/assets/textures/icon.png"),
     properties = {
         {
             id = "multiplier",
